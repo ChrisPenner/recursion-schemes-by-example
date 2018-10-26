@@ -4,7 +4,7 @@
 module Promorphisms where
 
 import           Data.Functor.Foldable
-import           JSON
+import           Data.JSONF
 import qualified Data.Map                      as M
 
 

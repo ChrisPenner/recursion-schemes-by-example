@@ -2,8 +2,7 @@
 {-# LANGUAGE TupleSections #-}
 module Examples where
 
-import           Aeson
-import           JSON
+import           Data.JSONF
 
 import qualified Data.Aeson                    as A
 import           Control.Comonad.Cofree

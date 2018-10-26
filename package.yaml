@@ -24,7 +24,12 @@ dependencies:
 - recursion-schemes
 - mtl
 - free
-- jsonf
+- aeson
+- containers
+- unordered-containers
+- deriving-compat
+- vector
+- text
 
 library:
   source-dirs: src
