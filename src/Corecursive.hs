@@ -1,12 +1,11 @@
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TupleSections #-}
 module Corecursive where
 
 import           Data.Functor.Foldable
 import           Data.TreeF
 import           Data.JSONF
-
-
-
+import qualified Data.Map                      as M
 
 ------------------ Ana -----------------------
 
@@ -44,3 +43,10 @@ mapNumbers f = ana alg
   alg :: JSON -> JSONF JSON
   alg (Number n) = NumberF (f n)
   alg j          = project j
+
+buildPath :: ([String], Double) -> JSON
+buildPath = ana coalg
+ where
+  coalg :: ([String], Double) -> JSONF ([String], Double)
+  coalg ([]       , d) = NumberF d
+  coalg (p : paths, d) = ObjectF (M.singleton p (paths, d))
