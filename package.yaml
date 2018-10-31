@@ -30,6 +30,8 @@ dependencies:
 - deriving-compat
 - vector
 - text
+- bytestring
+- doctest
 
 library:
   source-dirs: src
@@ -55,3 +57,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - exploring-recursion-schemes
+    - doctest

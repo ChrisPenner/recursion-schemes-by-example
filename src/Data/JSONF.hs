@@ -15,6 +15,10 @@ import qualified Data.Vector                   as V
 import qualified Data.HashMap.Strict           as HM
 import qualified Data.Text                     as T
 import           Data.Bifunctor
+import           Data.Maybe
+import           Data.ByteString.Lazy          as BS
+                                                   hiding ( pack, unpack )
+import           Data.ByteString.Lazy.Char8    as BS
 
 data JSON
   = Object (M.Map String JSON)
@@ -51,8 +55,8 @@ instance Corecursive JSON where
   embed (ObjectF o) = Object o
   embed (ArrayF  a) = Array a
   embed (StringF s) = String s
-  embed (NumberF n) = (Number n)
-  embed (BoolF b) = (Bool b)
+  embed (NumberF n) = Number n
+  embed (BoolF b) = Bool b
   embed NullF     = Null
 
 --------------------------------------------------------------------------------
@@ -87,7 +91,14 @@ instance Corecursive A.Value where
   embed (ObjectF obj) = A.Object (HM.fromList . fmap (first T.pack) . M.toList $ obj)
   embed (ArrayF  arr) = A.Array $ V.fromList arr
   embed (StringF s) = A.String (T.pack s)
-  embed (NumberF n) = (A.Number scientificN)
+  embed (NumberF n) = A.Number scientificN
     where scientificN = fromRational . toRational $ n
-  embed (BoolF b) = (A.Bool b)
+  embed (BoolF b) = A.Bool b
   embed NullF     = A.Null
+
+-- A simple helper to parse JSON for use in examples
+jsonFromString :: String -> JSON
+jsonFromString = fromJust . A.decode . BS.pack
+
+jsonToString :: JSON -> String
+jsonToString = BS.unpack . A.encode
