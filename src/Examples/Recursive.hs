@@ -1,13 +1,12 @@
 {-# LANGUAGE ScopedTypeVariables #-}
-module Recursive where
+module Examples.Recursive where
 
 import           Data.Functor.Foldable
 import           Data.TreeF
 import           Data.JSONF
 
 ------------------ Cata -----------------------
-
-
+-- start snippet cata
 -- sum list
 
 sumList :: [Int] -> Int
@@ -17,6 +16,7 @@ sumList = cata alg
   alg Nil               = 0
   alg (Cons next total) = next + total
 
+-- end snippet cata
 
 sumTree :: Tree Int -> Int
 sumTree = cata alg

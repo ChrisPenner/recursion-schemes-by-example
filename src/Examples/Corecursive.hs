@@ -1,6 +1,6 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TupleSections #-}
-module Corecursive where
+module Examples.Corecursive where
 
 import           Data.Functor.Foldable
 import           Data.TreeF
