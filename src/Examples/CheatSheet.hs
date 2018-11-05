@@ -97,7 +97,7 @@ zygoDedupeList = zygo setBuilderAlg listBuilderAlg
 
 -- |
 -- start snippet ana
--- >>> countDown 5
+-- >>> anaCountDown 5
 -- [5,4,3,2,1]
 
 anaCountDown :: Int -> [Int]
@@ -111,34 +111,15 @@ anaCountDown = ana coalg
 
 -- |
 -- start snippet apo
--- >>> countDown 5
--- [5,4,3,2,1]
+-- >>> apoConcat [1, 2] [3, 4]
+-- [1,2,3,4]
 
-apoCountDown :: Int -> [Int]
-apoCountDown = apo coalg
+apoConcat :: forall a . [a] -> [a] -> [a]
+apoConcat xs ys = apo coalg xs
  where
-  coalg :: Int -> ListF Int (Either [Int] Int)
-  coalg 1 = Cons 1 (Left [])
-  coalg n | even n    = Cons n (Right (n `div` 2))
-          | otherwise = Cons n (Right ((n * 3) + 1))
+  coalg :: [a] -> ListF a (Either [a] [a])
+  -- Recurse until the end of xs
+  coalg (x : xs) = Cons x (Right xs)
+  -- Upon hitting the end of 'xs', append ys, but use 'Left' to NOT recurse
+  coalg []       = Left <$> project ys
 -- end snippet apo
-
--- -- |
--- -- start snippet apo2
--- -- >>> apoWrapValues
--- -- [5,4,3,2,1]
--- λ> let d = jsonFromString "{ \"a\": null, \"b\": \"hi\"}"
--- λ> jsonToString $ apoFilter2 d
--- "{\"a\":[null],\"b\":[\"hi\"]}"
-
--- apoFilter2 :: JSON -> JSON
--- apoFilter2 = apo coalg
---  where
---   coalg :: JSON -> JSONF (Either JSON JSON)
---   coalg Null         = ArrayF [Left Null]
---   coalg (String s  ) = ArrayF [Left $ String s]
---   coalg (Bool   b  ) = ArrayF [Left $ Bool b]
---   coalg (Number n  ) = ArrayF [Left $ Number n]
---   coalg (Array  arr) = ArrayF (Right <$> arr)
---   coalg (Object obj) = ObjectF (Right <$> obj)
--- -- end snippet apo2

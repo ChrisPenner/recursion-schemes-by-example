@@ -24,3 +24,7 @@
 ```{.haskell include=src/Examples/CheatSheet.hs snippet=ana}
 ```
 
+## apo 
+```{.haskell include=src/Examples/CheatSheet.hs snippet=apo}
+```
+
