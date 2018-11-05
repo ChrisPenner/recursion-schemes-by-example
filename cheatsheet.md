@@ -18,3 +18,9 @@
 ```{.haskell include=src/Examples/CheatSheet.hs snippet=zygo}
 ```
 
+# Co-Recursive
+
+## ana 
+```{.haskell include=src/Examples/CheatSheet.hs snippet=ana}
+```
+

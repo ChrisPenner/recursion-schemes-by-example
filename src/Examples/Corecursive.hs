@@ -50,3 +50,20 @@ buildPath = ana coalg
   coalg :: ([String], Double) -> JSONF ([String], Double)
   coalg ([]       , d) = NumberF d
   coalg (p : paths, d) = ObjectF (M.singleton p (paths, d))
+
+
+collatzBuilder :: Int -> [Int]
+collatzBuilder = ana coalg
+ where
+  coalg :: Int -> ListF Int Int
+  coalg 0 = Nil
+  coalg 1 = Cons 1 0
+  coalg n | even n    = Cons n (n `div` 2)
+          | otherwise = Cons n ((n * 3) + 1)
+
+anaGroupBy :: Int -> [a] -> [[a]]
+anaGroupBy n = ana coalg
+ where
+  coalg :: [a] -> ListF [a] [a]
+  coalg [] = Nil
+  coalg xs = Cons (take n xs) (drop n xs)
