@@ -2,12 +2,15 @@
 module Examples.CheatSheet where
 
 import           Data.Functor.Foldable
+import           Data.Functor.Base
 import           Data.TreeF
 import           Data.JSONF
 import qualified Data.Map                      as M
 import qualified Data.Set                      as S
 import qualified Control.Comonad.Cofree        as CF
 import           Control.Comonad
+import           Data.List                     as L
+import Data.Maybe
 
 -- |
 -- start snippet project
@@ -108,7 +111,6 @@ anaCountDown = ana coalg
   coalg n = Cons n (n - 1)
 -- end snippet ana
 
-
 -- |
 -- start snippet apo
 -- >>> apoConcat [1, 2] [3, 4]
@@ -123,3 +125,22 @@ apoConcat xs ys = apo coalg xs
   -- Upon hitting the end of 'xs', append ys, but use 'Left' to NOT recurse
   coalg []       = Left <$> project ys
 -- end snippet apo
+
+-- |
+-- start snippet hylo
+-- >>> hyloDisplayFactors 30
+-- "2 * 3 * 5"
+hyloDisplayFactors :: Int -> String
+hyloDisplayFactors = hylo alg coalg
+ where
+  alg :: NonEmptyF Int String -> String
+  alg (NonEmptyF n Nothing    ) = show n
+  alg (NonEmptyF n (Just rest)) = show n ++ " * " ++ rest
+  coalg :: Int -> NonEmptyF Int Int
+  coalg 1 = NonEmptyF 1 Nothing
+  coalg n =
+    let nextFactor    = fromMaybe n $ find ((== 0) . mod n) [2 ..]
+        reducedNumber = n `div` nextFactor
+    in  NonEmptyF nextFactor
+          $ if reducedNumber == 1 then Nothing else Just reducedNumber
+-- end snippet hylo
