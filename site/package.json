@@ -1,6 +1,6 @@
 {
-  "name": "lens-by-example-react",
-  "homepage": "https://lens-by-example.chrispenner.ca/",
+  "name": "recursion-schemes-by-example",
+  "homepage": "https://recursion-schemes-by-example.chrispenner.ca/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import PatreonButton from './PatreonButton'
-import lensIcon from '../assets/lens.svg'
+import icon from '../assets/logo.svg'
+import {title} from '../data/config.json'
 
 export default () =>
     <nav className="navbar" role="navigation" aria-label="main navigation">
         <div>
             <Link className="navbar-title" to="/">
                 <span>
-                    <img width="24" height="24" src={lensIcon} alt="lens icon" />
-                    <span className="title"> Lens by Example </span>
+                    <img width="24" height="24" src={icon} alt="logo" />
+                    <span className="title">{title}</span>
                 </span>
             </Link>
             <span className="subtitle is-size-6"><i> A Chris Penner Project</i></span>
