@@ -1,0 +1,46 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: aefe1681afd59acd3fa826962027742c7958d84418ab338b680b5ef0bb1d942d
+
+name:           lens-by-example-site
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/ChrisPenner/lens-by-example#readme>
+homepage:       https://github.com/ChrisPenner/lens-by-example#readme
+bug-reports:    https://github.com/ChrisPenner/lens-by-example/issues
+author:         Chris Penner
+maintainer:     christopher.penner@gmail.com
+copyright:      Chris Penner
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/ChrisPenner/lens-by-example
+
+executable build-site
+  main-is: Main.hs
+  other-modules:
+      Paths_lens_by_example_site
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , lens
+    , lens-aeson
+    , pandoc
+    , pandoc-include-code
+    , pandoc-types
+    , shake
+    , slick
+    , text
+  default-language: Haskell2010

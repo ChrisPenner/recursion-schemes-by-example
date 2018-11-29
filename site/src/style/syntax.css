@@ -1,0 +1,32 @@
+pre {
+    background-color: #F5FCFF !important;
+}
+
+code {
+    background-color: #F5FCFF !important;
+    color: #268BD2 !important;
+}
+
+/* KeyWordTok */
+.sourceCode .kw { color: #600095 !important; }
+/* DataTypeTok */
+.sourceCode .dt { color: #268BD2 !important; }
+
+/* DecValTok (decimal value), BaseNTok, FloatTok */
+.sourceCode .dv, .sourceCode .bn, .sourceCode .fl { color: #AE81FF !important; }
+/* CharTok */
+.sourceCode .ch { color: #37ad2d !important; }
+/* StringTok */
+.sourceCode .st { color: #37ad2d !important; }
+/* CommentTok */
+.sourceCode .co { color: #7E8E91 !important; }
+/* OtherTok */
+.sourceCode .ot { color: #EB005B !important; }
+/* AlertTok */
+.sourceCode .al { color: #A6E22E !important; font-weight: bold !important; }
+/* FunctionTok */
+.sourceCode .fu { color: #EB005B  !important; }
+/* RegionMarkerTok */
+.sourceCode .re { }
+/* ErrorTok */
+.sourceCode .er { color: #E6DB74 !important; font-weight: bold !important; }

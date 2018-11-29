@@ -94,3 +94,24 @@ displayFactors = hylo alg coalg
         reducedNumber = n `div` nextFactor
     in  NonEmptyF nextFactor
           $ if reducedNumber == 1 then Nothing else Just reducedNumber
+
+-- |
+-- >>> apoMapFirst even (*100) [1, 2, 3, 4]
+-- [1,200,3,4]
+apoMapFirst :: forall a . (a -> Bool) -> (a -> a) -> [a] -> [a]
+apoMapFirst predicate f = apo coalg
+ where
+  coalg :: [a] -> ListF a (Either [a] [a])
+  coalg [] = Nil
+  coalg (x : xs) | predicate x = Cons (f x) (Left xs)
+                 | otherwise   = Cons x (Right xs)
+
+
+apoArbitraryPrecisionSqrt :: Float -> [Float]
+apoArbitraryPrecisionSqrt = apo coalg
+ where
+  coalg n =
+    let next = sqrt n
+    in  if abs (next - n) < 0.5
+          then Cons n (Left [next])
+          else Cons n (Right next)
