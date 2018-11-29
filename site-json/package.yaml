@@ -1,6 +1,6 @@
-name:                lens-by-example-site
+name:                recursion-schemes-by-example-site
 version:             0.1.0.0
-github:              "ChrisPenner/lens-by-example"
+github:              "ChrisPenner/recursion-schemes-by-example"
 license:             BSD3
 author:              "Chris Penner"
 maintainer:          "christopher.penner@gmail.com"
@@ -17,7 +17,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/ChrisPenner/lens-by-example#readme>
+description:         Please see the README on GitHub at <https://github.com/ChrisPenner/recursion-schemes-by-example#readme>
 
 dependencies:
 - base >= 4.7 && < 5

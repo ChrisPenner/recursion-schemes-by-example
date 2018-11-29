@@ -4,13 +4,13 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: aefe1681afd59acd3fa826962027742c7958d84418ab338b680b5ef0bb1d942d
+-- hash: 45f150dbaf0359d21d7f53830c912a9767f50b86b67ce69dd8bf0f0d7eac107f
 
-name:           lens-by-example-site
+name:           recursion-schemes-by-example-site
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/ChrisPenner/lens-by-example#readme>
-homepage:       https://github.com/ChrisPenner/lens-by-example#readme
-bug-reports:    https://github.com/ChrisPenner/lens-by-example/issues
+description:    Please see the README on GitHub at <https://github.com/ChrisPenner/recursion-schemes-by-example#readme>
+homepage:       https://github.com/ChrisPenner/recursion-schemes-by-example#readme
+bug-reports:    https://github.com/ChrisPenner/recursion-schemes-by-example/issues
 author:         Chris Penner
 maintainer:     christopher.penner@gmail.com
 copyright:      Chris Penner
@@ -23,12 +23,12 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/ChrisPenner/lens-by-example
+  location: https://github.com/ChrisPenner/recursion-schemes-by-example
 
 executable build-site
   main-is: Main.hs
   other-modules:
-      Paths_lens_by_example_site
+      Paths_recursion_schemes_by_example_site
   hs-source-dirs:
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
