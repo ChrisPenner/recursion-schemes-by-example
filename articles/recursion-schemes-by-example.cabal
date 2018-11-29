@@ -1,0 +1,82 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 9034e66d869b8e15008558fade38d8f6ba87c0161068ca108218385030b44002
+
+name:           recursion-schemes-by-example
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/ChrisPenner/recursion-schemes-by-example#readme>
+homepage:       https://github.com/ChrisPenner/-examplesample#readme
+bug-reports:    https://github.com/ChrisPenner/-examplesample/issues
+author:         Chris Penner
+maintainer:     christopher.penner@gmail.com
+copyright:      Chris Penner
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/ChrisPenner/-examplesample
+
+library
+  exposed-modules:
+      Data.JSONF
+      Data.ListF
+      Data.TreeF
+      Examples.CheatSheet
+      Examples.Corecursive
+      Examples.Recursive
+      Examples.Tree
+      Lib
+      Promorphisms
+  other-modules:
+      Paths_recursion_schemes_by_example
+  hs-source-dirs:
+      src
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , comonad
+    , containers
+    , deriving-compat
+    , doctest
+    , free
+    , mtl
+    , recursion-schemes
+    , text
+    , unordered-containers
+    , vector
+  default-language: Haskell2010
+
+test-suite recursion-schemes-by-example-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_recursion_schemes_by_example
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , comonad
+    , containers
+    , deriving-compat
+    , doctest
+    , free
+    , mtl
+    , recursion-schemes
+    , recursion-schemes-by-example
+    , text
+    , unordered-containers
+    , vector
+  default-language: Haskell2010

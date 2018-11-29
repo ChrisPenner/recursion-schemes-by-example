@@ -1,6 +1,6 @@
-name:                lens-by-example-examples
+name:                recursion-schemes-by-example
 version:             0.1.0.0
-github:              "ChrisPenner/lens-by-example"
+github:              "ChrisPenner/-examplesample"
 license:             BSD3
 author:              "Chris Penner"
 maintainer:          "christopher.penner@gmail.com"
@@ -17,18 +17,28 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/ChrisPenner/lens-by-example#readme>
+description:         Please see the README on GitHub at <https://github.com/ChrisPenner/recursion-schemes-by-example#readme>
 
 library:
   source-dirs: src
 
 dependencies:
 - base >= 4.7 && < 5
-- lens
+- recursion-schemes
+- mtl
+- free
+- aeson
 - containers
+- unordered-containers
+- deriving-compat
+- vector
+- text
+- bytestring
+- doctest
+- comonad
 
 tests:
-  lens-by-example-test:
+  recursion-schemes-by-example-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -36,4 +46,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - lens-by-example
+    - recursion-schemes-by-example
