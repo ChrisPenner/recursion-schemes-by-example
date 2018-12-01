@@ -81,3 +81,14 @@ a.sourceLine {
   justify-content: center;
   margin: auto;
 }
+
+.navbar-title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  margin-right: 0.5em;
+}
