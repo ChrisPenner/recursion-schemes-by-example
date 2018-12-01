@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9034e66d869b8e15008558fade38d8f6ba87c0161068ca108218385030b44002
+-- hash: 1edfd70b23df851b33bcc1fafa9f0057935911d9052a7ac9742d68c6b07ca521
 
 name:           recursion-schemes-by-example
 version:        0.1.0.0
@@ -27,12 +27,15 @@ source-repository head
 
 library
   exposed-modules:
+      Data.BinaryTreeF
       Data.JSONF
       Data.ListF
       Data.TreeF
+      Examples.Algebra.FAlgebra
       Examples.CheatSheet
       Examples.Corecursive
       Examples.Recursive
+      Examples.Recursive.Cata
       Examples.Tree
       Lib
       Promorphisms
@@ -40,6 +43,7 @@ library
       Paths_recursion_schemes_by_example
   hs-source-dirs:
       src
+  ghc-options: -Wall
   build-depends:
       aeson
     , base >=4.7 && <5
