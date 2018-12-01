@@ -33,13 +33,11 @@ const buildArticleLink =
     </ReactHover>
 
 const buildSection = ([section, as]) => 
-    <ol key={section} type="1">
-        <li> {section}
+        <li key={section}> {section}
             <ol type="i"> 
                 {as.map(buildArticleLink)}
             </ol>
         </li>
-    </ol>
 
 export default () => {
     const articleList = Object.entries(sortedArticles).map(buildSection)
@@ -47,7 +45,9 @@ export default () => {
         <section className="section">
             <h1 className="subtitle">Sections</h1>
             <div className="content">
-                {articleList}
+                <ol type="1">
+                    {articleList}
+                </ol>
             </div>
         </section>
         <MailingListForm />

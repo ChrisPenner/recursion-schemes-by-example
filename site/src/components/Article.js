@@ -4,9 +4,7 @@ import articles from "../data/articles.json"
 import PatreonButton from './PatreonButton'
 
 export default ({match}) => {
-    console.log(match.params.slug)
     const article = articles.find(({slug}) => slug === match.params.slug)
-    console.log(articles)
     if (!article) {
         return <div> couldn't find: {match.params.slug}</div>
     }

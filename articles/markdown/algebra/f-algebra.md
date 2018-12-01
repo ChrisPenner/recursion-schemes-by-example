@@ -1,7 +1,7 @@
 ---
 what: "F-Algebras reduce data embedded in a structure (Functor) down to a single value"
 why: "F-Algebras are typically used as arguments to Recursive recursion-schemes"
-section: "Algebras"
+section: "Recursive"
 title: "F-Algebras"
 ---
 

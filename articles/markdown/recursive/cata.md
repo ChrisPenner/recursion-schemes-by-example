@@ -16,7 +16,7 @@ recursion schemes as a whole! They aren't as scary as they sound, the prefix
 change from one thing to another' so if we squint a bit we get that
 `catamorphism` basically means to reduce something down. Catamorphisms take
 some 'thing' with an associated 'structure' and reduce it down to some 'thing'
-with *less* structure.
+with **less** structure.
 
 Catamorphisms closely resemble the `foldr` function from `Data.List`; let's compare the two:
 
@@ -34,7 +34,7 @@ cata  :: (ListF a b -> b) ->        [b] -> b
 
 There are few things we notice right off the bat: the function we pass to each
 of them is slightly different; `foldr` explicitly handles the next element `a`
-and the accumulator `b` as arguments as well as passing a *default* `b` to use
+and the accumulator `b` as arguments as well as passing a **default** `b` to use
 in the case that the container is empty. `cata` leaves you to collect and
 handle the combination of the accumulated `b`s from your structure yourself,
 and to provide your own default behaviour if any of your constructors don't
@@ -95,7 +95,7 @@ orderings to do it!
 
 It turns out that when we derive the `Foldable` class, the order of the fields
 in our constructor actually determines which traversal we get! Since we have
-the structure `Branch a (BinTree a) (BinTree a)` GHC will *fold* the 'a' first,
+the structure `Branch a (BinTree a) (BinTree a)` GHC will **fold** the 'a' first,
 then the left branch followed by the right, corresponding to a depth first
 traversal. That means our implementation of Depth-First-Search using foldable
 is simply:
@@ -113,13 +113,13 @@ define an [*In
 Order*](https://en.wikipedia.org/wiki/Tree_traversal#In-order_(LNR)) traversal
 using our Foldable instance? Sorry to break it to ya, but we *can't*! Our
 foldable instance only knows how to process all elements, there are no
-guarantees on ordering and there's no way for us to talk about the *structure*
+guarantees on ordering and there's no way for us to talk about the **structure**
 of the data as we fold! Using `cata` it's easy! Check it out:
 
 ```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=inOrderCata}
 ```
 
-Hopefully this shows how recursion-schemes and the use of *algebras* helps give
-us more *power* by having knowledge of our data's *structure* at the cost of a
+Hopefully this shows how recursion-schemes and the use of **algebras** helps give
+us more **power** by having knowledge of our data's **structure** at the cost of a
 little boiler-plate.
 
