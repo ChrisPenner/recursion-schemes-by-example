@@ -1,6 +1,6 @@
 ---
 what: "Fold data structures down to a single value"
-why: "Catamorphisms allow you to express recursion elegantly"
+why: "Catamorphisms allow you to express recursive operations elegantly"
 section: "Recursive"
 title: "Basic Catamorphisms"
 ---
@@ -13,12 +13,17 @@ the Harry Potter books then you're in the right place!
 Catamorphisms are a great place to start on your journey towards understanding
 recursion schemes as a whole! They aren't as scary as they sound, the prefix
 `cata` comes from the Greek word meaning `downwards`, `morph` loosely means 'to
-change from one thing to another' so if we squint a bit we get that
-`catamorphism` basically means to reduce something down. Catamorphisms take
-some 'thing' with an associated 'structure' and reduce it down to some 'thing'
-with **less** structure.
+change from one thing to another' so if we squint a bit we can pretend that
+`catamorphism` means to reduce something down. Catamorphisms take some _thing_
+with an associated 'structure' and reduce it down to some _thing_ with **less**
+structure.
 
-Catamorphisms closely resemble the `foldr` function from `Data.List`; let's compare the two:
+If you've been using a functional programming language for a while you're
+probably familiar with other ways of reducing structure such as operations from
+the `Foldable` typeclass or perhaps using explicit recursion.
+
+Catamorphisms closely resemble the `foldr` function from `Data.List`; let's
+compare the two:
 
 ```haskell
 foldr :: Foldable t  => (a -> b -> b)   -> b -> t a -> b
@@ -40,20 +45,32 @@ handle the combination of the accumulated `b`s from your structure yourself,
 and to provide your own default behaviour if any of your constructors don't
 contain any accumulated value (`Nil` in this case).
 
-Shifting these concerns into the algebra actually makes this approach more
-powerful, we have knowledge of the structure we're folding at each step and can
-make different decisions based on it, possibly handling recursive values
-differently based on their location in the structure (e.g. subtract
+The first argument which cata takes (`Recursive t => (Base t b -> b)`) is
+called an **F-Algebra**, it's a function which performs a single reduction step
+of a recursive operation. See the post on [F-Algebras](/recursive/f-algebras)
+to dive in deeper!
+
+Shifting concerns into the algebra actually makes `cata` more powerful than
+`foldr`, we have knowledge of the structure of the data we're folding at each
+step and can make different decisions based on it, possibly handling recursive
+values differently based on their location in the structure (e.g. subtract
 accumulators in the right branch of a binary tree from those in the left
 branch).
 
-Let's write the `sum :: [Int] -> Int` function using both `foldr` and `cata` to
-see how they compare and get an intuition for folding using algebras.
+Let's write the `sum :: [Int] -> Int` function in a few different ways so we
+can compare approaches. We'll do one using `foldr`, one with explicit recursion
+and finally one with `cata`. 
 
 Here's the simple `foldr` version:
 
 ```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=sumFoldr}
 ```
+
+Here's one with explicit recursion:
+
+```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=sumRecursive}
+```
+
 
 Here's the slightly longer `cata` version
 
@@ -62,8 +79,10 @@ Here's the slightly longer `cata` version
 
 So we can see here that the `cata` version is definitely longer for this
 particular case, using `cata` doesn't gain us much when we're operating on
-lists; but as we continue onwards to more complex structures we find that we have
-more power using an algebra than we do with the `Foldable` instance of structures.
+lists since they have no additional structure on top of what `Foldable`
+provides us via `toList`; but as we continue onwards to more complex structures
+we find that we have more power using an algebra than we do with the `Foldable`
+instance of structures.
 
 Let's upgrade our Lists to Trees to see how this plays out!
 
@@ -119,7 +138,7 @@ of the data as we fold! Using `cata` it's easy! Check it out:
 ```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=inOrderCata}
 ```
 
-Hopefully this shows how recursion-schemes and the use of **algebras** helps give
+This shows how recursion-schemes and the use of **algebras** helps give
 us more **power** by having knowledge of our data's **structure** at the cost of a
 little boiler-plate.
 

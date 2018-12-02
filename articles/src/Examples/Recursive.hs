@@ -80,12 +80,13 @@ flattenObjects = cata alg
   alg :: JSONF JSON -> JSON
   alg (ObjectF obj) = Object (M.foldMapWithKey go obj)
    where
-    go k (Object obj) = M.mapKeys (\p -> k <> "." <> p) obj
-    go k (Array arr) =
+    go k (Object o) = M.mapKeys (\p -> k <> "." <> p) o
+    go _ (Array arr) =
       let indexes = show <$> [0 ..] in M.fromList (zip indexes arr)
     go k v = M.singleton k v
   alg (ArrayF arr) =
-    let indexes = show <$> [0 ..] in Object $ M.fromList (zip indexes arr)
+    let indexes = show <$> [0 ..]
+    in  Object $ M.fromList (zip indexes arr)
   alg NullF       = Null
   alg (StringF s) = String s
   alg (NumberF n) = Number n

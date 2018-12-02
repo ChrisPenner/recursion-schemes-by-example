@@ -4,6 +4,12 @@ import Data.Functor.Foldable
 import Data.Foldable
 import Data.BinaryTreeF
 
+-- start snippet sumRecursive
+sumRecursive :: [Int] -> Int
+sumRecursive []         = 0
+sumRecursive (n : rest) = n + sumRecursive rest
+-- end snippet sumRecursive
+
 -- start snippet sumFoldr
 sumFoldr :: [Int] -> Int
 sumFoldr = foldr (+) 0
