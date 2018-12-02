@@ -2,10 +2,10 @@
 {-# LANGUAGE TypeFamilies #-}
 module Data.ListF where
 
-import           Data.Functor.Foldable             hiding ( ListF(..) )
-
-data ListF a r = Cons a r | Nil
+-- start snippet ListF
+data ListF a r = Nil | Cons a r
   deriving (Show, Eq, Functor)
+-- end snippet ListF
 
 -- type instance Base [a] = ListF a
 

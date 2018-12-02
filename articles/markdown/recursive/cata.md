@@ -8,14 +8,14 @@ title: "Basic Catamorphisms"
 # Basic Catamorphisms
 
 Welcome! If you think a catamorphism might be what Professor McGonagall does in
-the Harry Potter books then you're in the right place! 
+the Harry Potter books then you're about to learn something! 
 
 Catamorphisms are a great place to start on your journey towards understanding
-recursion schemes as a whole! They aren't as scary as they sound, the prefix
+recursion schemes as a whole; they aren't as scary as they sound, the prefix
 `cata` comes from the Greek word meaning `downwards`, `morph` loosely means 'to
 change from one thing to another' so if we squint a bit we can pretend that
 `catamorphism` means to reduce something down. Catamorphisms take some _thing_
-with an associated 'structure' and reduce it down to some _thing_ with **less**
+with some associated structure and reduce it down to some new _thing_ with **less**
 structure.
 
 If you've been using a functional programming language for a while you're
@@ -38,24 +38,23 @@ cata  :: (ListF a b -> b) ->        [b] -> b
 ```
 
 There are few things we notice right off the bat: the function we pass to each
-of them is slightly different; `foldr` explicitly handles the next element `a`
-and the accumulator `b` as arguments as well as passing a **default** `b` to use
-in the case that the container is empty. `cata` leaves you to collect and
-handle the combination of the accumulated `b`s from your structure yourself,
-and to provide your own default behaviour if any of your constructors don't
-contain any accumulated value (`Nil` in this case).
+of them is slightly different; the function you pass to `foldr` combines the
+next element `a` and the accumulator `b`. `foldr` requires a default `b` in
+case the foldable structure is empty. The albegra you pass to `cata` must
+combine any accumulated `b`s from your structure with any new `a`s, and also must
+provide default behaviour in any base case which may occur.
 
 The first argument which cata takes (`Recursive t => (Base t b -> b)`) is
 called an **F-Algebra**, it's a function which performs a single reduction step
-of a recursive operation. See the post on [F-Algebras](/recursive/f-algebras)
+of a recursive operation. See the post on [F-Algebras](/articles/recursive/f-algebras)
 to dive in deeper!
 
-Shifting concerns into the algebra actually makes `cata` more powerful than
-`foldr`, we have knowledge of the structure of the data we're folding at each
-step and can make different decisions based on it, possibly handling recursive
-values differently based on their location in the structure (e.g. subtract
-accumulators in the right branch of a binary tree from those in the left
-branch).
+Handling the base case and collection of values into an algebra actually makes
+`cata` more powerful than `foldr`, we have knowledge of the structure of the
+data we're folding at each step and can make different decisions based on it,
+possibly handling recursive values differently based on their location in the
+structure (e.g. combine accumulators from the right branch of a binary tree
+differently from those in the left branch).
 
 Let's write the `sum :: [Int] -> Int` function in a few different ways so we
 can compare approaches. We'll do one using `foldr`, one with explicit recursion
@@ -70,7 +69,6 @@ Here's one with explicit recursion:
 
 ```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=sumRecursive}
 ```
-
 
 Here's the slightly longer `cata` version
 
