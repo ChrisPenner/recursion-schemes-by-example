@@ -3,6 +3,7 @@ what: "F-Algebras reduce data embedded in a structure (Functor) down to a single
 why: "F-Algebras are typically used as arguments to Recursive recursion-schemes"
 section: "Recursive"
 title: "F-Algebras"
+sortKey: 1
 ---
 
 # F-Algebras

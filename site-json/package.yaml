@@ -41,3 +41,4 @@ executables:
     - pandoc-include-code
     - lens
     - lens-aeson
+    - either

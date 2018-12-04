@@ -3,6 +3,7 @@ what: "Fold data structures down to a single value"
 why: "Catamorphisms allow you to express recursive operations elegantly"
 section: "Recursive"
 title: "Basic Catamorphisms"
+sortKey: 2
 ---
 
 # Basic Catamorphisms

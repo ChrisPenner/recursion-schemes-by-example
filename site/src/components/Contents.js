@@ -4,9 +4,10 @@ import {Link} from 'react-router-dom'
 import MailingListForm from './MailingListForm'
 import articles from "../data/articles.json"
 import groupBy from "lodash.groupby"
+import sortBy from "lodash.sortby"
 import ReactHover from 'react-hover'
 
-const sortedArticles = groupBy(articles, a => a.section)
+const groupedArticles = groupBy(articles, a => a.section)
 const options = {
   followCursor:false,
   shiftX: 0,
@@ -32,15 +33,17 @@ const buildArticleLink =
         </ReactHover.Hover>
     </ReactHover>
 
-const buildSection = ([section, as]) => 
-        <li key={section}> {section}
+    const buildSection = ([section, as]) => {
+        const sortedArticles = sortBy(as, ['sortKey'])
+        return <li key={section}> {section}
             <ol type="i"> 
-                {as.map(buildArticleLink)}
+                {sortedArticles.map(buildArticleLink)}
             </ol>
         </li>
+    }
 
 export default () => {
-    const articleList = Object.entries(sortedArticles).map(buildSection)
+    const articleList = Object.entries(groupedArticles).map(buildSection)
     return <div>
         <section className="section">
             <h1 className="subtitle">Sections</h1>

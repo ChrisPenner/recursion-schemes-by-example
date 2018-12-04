@@ -3,6 +3,7 @@ what: "Base"
 why: "Each recursive type has a 'Base' where recursion is factored out into a type parameter"
 section: "Data"
 title: "Base"
+sortKey: 1
 ---
 
 # Base

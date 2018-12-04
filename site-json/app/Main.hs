@@ -20,6 +20,8 @@ import Control.Lens
 import Data.Aeson.Lens
 import Data.Char (isSpace)
 import Data.Text.Lens
+import Data.Bifunctor
+import Data.Either.Combinators
 
 
 markdownReaderWithSnippets :: PandocReader T.Text
@@ -41,6 +43,7 @@ data Article = Article
   , content :: T.Text
   , slug :: T.Text
   , url :: T.Text
+  , sortKey :: T.Text
   } deriving Generic
 
 instance A.FromJSON Article
@@ -53,7 +56,8 @@ slugify =
     . T.words
     . T.replace "&" "and"
     . T.replace "+" "and"
-    . T.filter (not . (`elem` ("@#=><%+&$!^*?()[]{}`./\\'\"~|" :: String)))
+    . T.filter
+        (not . (`elem` ("@#=><%+&$!^*?()[]{}`./\\'\"~|" :: String)))
     . T.toLower
     . T.strip
 
@@ -61,34 +65,43 @@ loadArticle :: ArticleReq -> Action Article
 loadArticle (ArticleReq srcPath) = do
   articleContents <- readFile' srcPath
   articleData     <-
-    loadUsing markdownReaderWithSnippets (writeHtml5String html5Options)
+    loadUsing markdownReaderWithSnippets
+              (writeHtml5String html5Options)
     . T.pack
     $ articleContents
-  maybe (fail "missing key in article") return (toArticle articleData)
+  either fail return (toArticle articleData)
 
 buildURL :: A.Value -> Maybe T.Text
 buildURL val = T.pack <$> do
-  slugSection <- val ^? key "section" . _String . to slugify . unpacked
-  slugTitle   <- val ^? key "title" . _String . to slugify . unpacked
+  slugSection <-
+    val ^? key "section" . _String . to slugify . unpacked
+  slugTitle <- val ^? key "title" . _String . to slugify . unpacked
   return ("/articles/" </> slugSection </> slugTitle)
 
 
-toArticle :: A.Value -> Maybe Article
+toArticle :: A.Value -> Either String Article
 toArticle val =
   Article
-    <$> (val ^? key "what" . _String)
-    <*> (val ^? key "why" . _String)
-    <*> (val ^? key "title" . _String)
-    <*> (val ^? key "section" . _String)
-    <*> (val ^? key "content" . _String)
-    <*> (val ^? key "title" . _String . to slugify)
-    <*> buildURL val
+    <$> maybeToRight "missing 'what'"  (val ^? key "what" . _String)
+    <*> maybeToRight "missing 'why'"   (val ^? key "why" . _String)
+    <*> maybeToRight "missing 'title'" (val ^? key "title" . _String)
+    <*> maybeToRight "missing 'section'"
+                     (val ^? key "section" . _String)
+    <*> maybeToRight "missing 'content'"
+                     (val ^? key "content" . _String)
+    <*> maybeToRight "missing 'title'"
+                     (val ^? key "title" . _String . to slugify)
+    <*> maybeToRight "missing 'url'" (buildURL val)
+    <*> maybeToRight "missing 'sortKey'"
+                     (val ^? key "sortKey" . _String)
 
 loadAllArticles :: (ArticleReq -> Action Article) -> Action [Article]
 loadAllArticles articleCache = do
-  articleSrcPaths <- getDirectoryFiles "./articles/markdown/" ["//*.md"]
-  traverse (articleCache . ArticleReq . ("./articles/markdown/" </>))
-           articleSrcPaths
+  articleSrcPaths <- getDirectoryFiles "./articles/markdown/"
+                                       ["//*.md"]
+  traverse
+    (articleCache . ArticleReq . ("./articles/markdown/" </>))
+    articleSrcPaths
 
 main :: IO ()
 main = shakeArgs shakeOptions $ do

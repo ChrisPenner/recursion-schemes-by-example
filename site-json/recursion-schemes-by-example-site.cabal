@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 45f150dbaf0359d21d7f53830c912a9767f50b86b67ce69dd8bf0f0d7eac107f
+-- hash: a309412a01f12d49ecf8ed54aea9a8c9b2a6e50463fea51a1484caa64f3c7a81
 
 name:           recursion-schemes-by-example-site
 version:        0.1.0.0
@@ -35,6 +35,7 @@ executable build-site
   build-depends:
       aeson
     , base >=4.7 && <5
+    , either
     , lens
     , lens-aeson
     , pandoc

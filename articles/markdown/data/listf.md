@@ -3,6 +3,7 @@ what: "ListF"
 why: "ListF is the Base functor for the [] type"
 section: "Data"
 title: "ListF"
+sortKey: 2
 ---
 
 # ListF
