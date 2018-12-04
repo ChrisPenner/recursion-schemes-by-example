@@ -4,7 +4,7 @@ module Data.ListF where
 
 -- start snippet ListF
 data ListF a r = Nil | Cons a r
-  deriving (Show, Eq, Functor)
+  deriving (Functor)
 -- end snippet ListF
 
 -- type instance Base [a] = ListF a
