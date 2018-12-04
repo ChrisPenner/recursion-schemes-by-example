@@ -46,7 +46,7 @@ combine any accumulated `b`s from your structure with any new `a`s, and also mus
 provide default behaviour in any base case which may occur.
 
 The first argument which cata takes (`Recursive t => (Base t b -> b)`) is
-called an **F-Algebra**, it's a function which performs a single reduction step
+called an [**F-Algebra**](/articles/recursive/f-algebras), it's a function which performs a single reduction step
 of a recursive operation. See the post on [F-Algebras](/articles/recursive/f-algebras)
 to dive in deeper!
 
@@ -71,7 +71,7 @@ Here's one with explicit recursion:
 ```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=sumRecursive}
 ```
 
-Here's the slightly longer `cata` version
+Here's the `cata` version
 
 ```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=sumCata}
 ```
@@ -113,7 +113,7 @@ orderings to do it!
 
 It turns out that when we derive the `Foldable` class, the order of the fields
 in our constructor actually determines which traversal we get! Since we have
-the structure `Branch a (BinTree a) (BinTree a)` GHC will **fold** the 'a' first,
+the structure `Branch a (BinTree a) (BinTree a)` GHC will fold the `a` first,
 then the left branch followed by the right, corresponding to a depth first
 traversal. That means our implementation of Depth-First-Search using foldable
 is simply:
