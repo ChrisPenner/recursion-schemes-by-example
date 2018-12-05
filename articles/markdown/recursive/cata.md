@@ -8,9 +8,6 @@ sortKey: 2
 
 # Basic Catamorphisms
 
-Welcome! If you think a catamorphism might be what Professor McGonagall does in
-the Harry Potter books then you're about to learn something! 
-
 Catamorphisms are a great place to start on your journey towards understanding
 recursion schemes as a whole; they aren't as scary as they sound, the prefix
 `cata` comes from the Greek word meaning `downwards`, `morph` loosely means 'to
@@ -21,41 +18,43 @@ structure.
 
 If you've been using a functional programming language for a while you're
 probably familiar with other ways of reducing structure such as operations from
-the `Foldable` typeclass or perhaps using explicit recursion.
-
-Catamorphisms closely resemble the `foldr` function from `Data.List`; let's
-compare the two:
+the `Foldable` typeclass or perhaps using explicit recursion. Catamorphisms
+closely resemble these operations, offering more power than `Foldable` and
+consolidating the complexities of arbitrary recursion into a well-formed idea.
+Let's get an intuition for how catamorphisms work by comparing them with `Foldable`!
 
 ```haskell
 foldr :: Foldable t  => (a -> b -> b)   -> b -> t a -> b
 cata ::  Recursive t => (Base t b -> b)      -> t   -> b
 ```
 
-If we specialize them both to lists we get the following:
+If we specialize both functions to lists we get the following:
 
 ```haskell
 foldr :: (a -> b -> b)    -> b   -> [a] -> b
 cata  :: (ListF a b -> b) ->        [b] -> b
 ```
 
-There are few things we notice right off the bat: the function we pass to each
-of them is slightly different; the function you pass to `foldr` combines the
-next element `a` and the accumulator `b`. `foldr` requires a default `b` in
-case the foldable structure is empty. The albegra you pass to `cata` must
-combine any accumulated `b`s from your structure with any new `a`s, and also must
-provide default behaviour in any base case which may occur.
+There are few things we notice right off the bat: the function argument which
+we pass to each of them is slightly different. The function you pass to `foldr`
+combines the next element `a` and the accumulator `b` and `foldr` requires a
+default `b` in case the foldable structure is empty. The albegra you pass to
+`cata` must combine any accumulated `b`s from your structure with any `a` which
+exist at the current level of the structure. It doesn't accept an explicit
+default, you're required to ensure that your algebra isn't *partial* and will
+typically provide your own default at the base case of your data-structure.
 
 The first argument which cata takes (`Recursive t => (Base t b -> b)`) is
-called an [**F-Algebra**](/articles/recursive/f-algebras), it's a function which performs a single reduction step
-of a recursive operation. See the post on [F-Algebras](/articles/recursive/f-algebras)
-to dive in deeper!
+called an [**F-Algebra**](/articles/recursive/f-algebras), it's a function
+which performs a single reduction step of a recursive operation. See the article
+on [F-Algebras](/articles/recursive/f-algebras) to dive in deeper!
 
-Handling the base case and collection of values into an algebra actually makes
-`cata` more powerful than `foldr`, we have knowledge of the structure of the
-data we're folding at each step and can make different decisions based on it,
-possibly handling recursive values differently based on their location in the
-structure (e.g. combine accumulators from the right branch of a binary tree
-differently from those in the left branch).
+The algebra is how we gain more power than available in `Foldable`;
+Inside the algebra we have knowledge of the structure of the
+data we're folding at each step. Maybe the structure has multiple `a`s or multiple recursive bits in some constructors
+and their place in the structure determines their significance? Perhaps there's more than one base case in the structure
+and we should return a different default value for each. `Foldable` abstracts over the structure too far for us to make
+these decisions.
 
 Let's write the `sum :: [Int] -> Int` function in a few different ways so we
 can compare approaches. We'll do one using `foldr`, one with explicit recursion
@@ -103,7 +102,7 @@ with a new type variable `r`.
 Great! That's a bit more interesting!
 
 To prove that our recursion schemes and algebras give new power over what
-Foldable brings we'll attempt to implement some standard tree traversals! If
+`Foldable` brings we'll attempt to implement some standard tree traversals! If
 you're unfamiliar with the concept you can read up more about tree traversals
 on the [Wiki
 page](https://en.wikipedia.org/wiki/Tree_traversal#In-order_(LNR))!
@@ -113,10 +112,10 @@ orderings to do it!
 
 It turns out that when we derive the `Foldable` class, the order of the fields
 in our constructor actually determines which traversal we get! Since we have
-the structure `Branch a (BinTree a) (BinTree a)` GHC will fold the `a` first,
-then the left branch followed by the right, corresponding to a depth first
-traversal. That means our implementation of Depth-First-Search using foldable
-is simply:
+the structure `Branch a (BinTree a) (BinTree a)` the derived instance will fold
+the `a` first, then the left branch followed by the right, corresponding to a
+depth first traversal. That means our implementation of Depth-First-Search
+using foldable is simply:
 
 ```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=depthFirstFoldable}
 ```
@@ -137,7 +136,16 @@ of the data as we fold! Using `cata` it's easy! Check it out:
 ```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=inOrderCata}
 ```
 
-This shows how recursion-schemes and the use of **algebras** helps give
-us more **power** by having knowledge of our data's **structure** at the cost of a
-little boiler-plate.
+Here's one more quick example of a simple algebra which **can't** be written
+using `Foldable`, we'll collect a list ofonly the leftmost nodes of a binary
+tree!
+
+```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=inOrderCata}
+```
+
+This shows how recursion-schemes and the use of **algebras** helps give us more
+**power** by having knowledge of our data's **structure** at the cost of a
+little boiler-plate. There are many many more complex things we can do with
+`cata`, and some recursive helpers like `para`, `zygo`, `histo` and friends
+which help make some common tasks easier!
 

@@ -19,13 +19,14 @@ show them how you'd like to collapse down a single 'layer' of structure. The lib
 can then apply this reduction iteratively until the entire structure has been collapsed.
 
 Here's an example of an `F-Algebra` over lists which shows how to fold a single
-'layer' of the `ListF` functor which contains an `Int` as data, and to combine
-it with the recursive result of summing the rest of the list. In the `Nil` case we must still
-return an `Int` somehow so we use `0` as the sum of an empty list is `0`.
+'layer' of the `ListF` functor ([read about `ListF`
+here](/articles/data/listf)) which contains an `Int` as data, and to combine it
+with the recursive result of summing the rest of the list. In the `Nil` case we
+must still return an `Int` somehow so we use `0` as our base case for `sum`.
 
-The signature of our algebra is `ListF Int Int -> Int` which means the `f` of
-this `F-Algebra` is `ListF Int` . We provide a way to collapse this structure
-containing `Int`s into a single `Int`
+The signature of our algebra is `ListF Int Int -> Int` which means the `f`
+(i.e. functor) of this `F-Algebra` is `ListF Int` . We provide a way to
+collapse this structure containing `Int`s into a single `Int`
 
 ```{.haskell include=articles/src/Examples/Algebra/FAlgebra.hs snippet=list-sum-algebra}
 ```

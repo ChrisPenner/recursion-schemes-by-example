@@ -49,3 +49,12 @@ inOrderCata = cata algebra
   algebra EmptyF          = []
   algebra (BranchF a l r) = l ++ [a] ++ r
 -- end snippet inOrderCata
+
+-- start snippet leftMostCata
+leftMostCata :: BinTree a -> [a]
+leftMostCata = cata algebra
+ where
+  algebra :: BinTreeF a [a] -> [a]
+  algebra EmptyF          = []
+  algebra (BranchF a l _) = a : l
+-- end snippet leftMostCata
