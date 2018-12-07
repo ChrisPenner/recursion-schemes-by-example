@@ -137,10 +137,10 @@ of the data as we fold! Using `cata` it's easy! Check it out:
 ```
 
 Here's one more quick example of a simple algebra which **can't** be written
-using `Foldable`, we'll collect a list ofonly the leftmost nodes of a binary
+using `Foldable`, we'll collect a list of only the leftmost nodes of a binary
 tree!
 
-```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=inOrderCata}
+```{.haskell include=articles/src/Examples/Recursive/Cata.hs snippet=leftMostCata}
 ```
 
 This shows how recursion-schemes and the use of **algebras** helps give us more
